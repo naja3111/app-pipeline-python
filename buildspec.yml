@@ -19,4 +19,4 @@ phases:
   post_build:
     commands:
       - echo pushing container into ECR
-      - docker push $REPOSITORY_URI:lates
+      - docker push $REPOSITORY_URI:latest
