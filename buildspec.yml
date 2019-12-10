@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: 18
+      python: 3.7
+  pre_build:
+    commands:
+      - echo installing pip requirements.
+      - pip install -r requirements.txt
+      - echo retrieving ECR token
+      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+  build:
+    commands:
+      - echo building docker image using Dockerfile.
+      - docker build -t $REPOSITORY_URI:latest .
+  
+  post_build:
+    commands:
+      - echo pushing container into ECR
+      - docker push $REPOSITORY_URI:lates
